@@ -37,20 +37,23 @@
 
 @implementation DLRViewController
 
+//update the firstNumber and the secondNumber outlets
+
 - (IBAction)digitPressed:(UIButton *)sender
 {
     if (!isDigitPressed){
         self.firstNumber.text = [NSString string];
         
-        self.firstNumber.text = [sender.titleLabel.text stringByAppendingString:sender.titleLabel.text];
+        self.firstNumber.text = [self.firstNumber.text stringByAppendingString:sender.titleLabel.text];
         isDigitPressed = YES;
     }
     
     else {
-    self.firstNumber.text = [sender.titleLabel.text stringByAppendingString:sender.titleLabel.text];
+    self.firstNumber.text = [self.firstNumber.text stringByAppendingString:sender.titleLabel.text];
     }
 }
 
+//updates the operator level
 - (IBAction)operatorPressed:(UIButton *)sender
 {
     

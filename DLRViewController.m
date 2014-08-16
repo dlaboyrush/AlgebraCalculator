@@ -71,26 +71,77 @@
 //updates the operator level
 - (IBAction)operatorPressed:(UIButton *)sender
 {
+    self.dFirstNumber = self.firstNumber.text.intValue;
+    self.dSecondNumber  = self.secondNumber.text.intValue;
+    self.dResult = self.result.text.doubleValue;
+    
+    
     if ([sender.titleLabel.text isEqualToString:(@"C")]){
         [self clear];
         
     }
     
-    else if (![sender.titleLabel.text isEqualToString:@"="]){
+    else {
+        if (![sender.titleLabel.text isEqualToString:@"="]){
+            //do the calculation
+            [self doCalculationWithOperator:self.operator.text];
+            self.operator.text = sender.titleLabel.text;
+            
 
-    self.operator.text = sender.titleLabel.text;
     }
-    isOperatorPressed = YES;
-    isDigitPressed = NO;
+        else{
+            [self doCalculationWithOperator:self.operator.text];
+            self.result.text = [NSString stringWithFormat:@"%.2f",self.dResult];
+            self.secondNumber.text = @"0";
+            
+            
+        }
+        isOperatorPressed = YES;
+        isDigitPressed = NO;
+        
+    }
+    
     
 }
-
+- (void)doCalculationWithOperator:(NSString *)operator
+{
+    if ([operator isEqualToString:@"+"]){
+        self.dResult = self.dFirstNumber + self.dSecondNumber;
+        self.firstNumber.text = [NSString stringWithFormat: @"%.2f",self.dResult];
+        self.secondNumber.text = @"0";
+        
+        
+    }
+    else if ([operator isEqualToString:@"-"]) {
+        self.dResult = self.dFirstNumber - self.dSecondNumber;
+        self.firstNumber.text = [NSString stringWithFormat: @"%.2f",self.dResult];
+        self.secondNumber.text = @"0";
+        
+    }
+    else if ([operator isEqualToString:@"x"]){
+        self.dResult = self.dFirstNumber * self.dSecondNumber;
+        self.firstNumber.text = [NSString stringWithFormat: @"%.2f",self.dResult];
+        self.secondNumber.text = @"0";
+    
+    }
+    else if ([operator isEqualToString:@"/"]){
+        if ( self.dSecondNumber != 0) {
+            self.dResult = self.dFirstNumber / self.dSecondNumber;
+            self.firstNumber.text = [NSString stringWithFormat: @"%.2f",self.dResult];
+            self.secondNumber.text = @"0";
+            
+        
+        
+    }
+    }
+}
 - (void)clear
 {
     self.firstNumber.text = @"0";
     self.secondNumber.text = @"0";
     self.result.text = @"0";
     self.operator.text = [NSString string];
+    isOperatorPressed = NO;
     
 }
 

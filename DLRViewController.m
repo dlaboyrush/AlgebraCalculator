@@ -12,6 +12,7 @@
 
 {
     BOOL isDigitPressed;
+    BOOL isOperatorPressed;
     
     
     
@@ -41,6 +42,7 @@
 
 - (IBAction)digitPressed:(UIButton *)sender
 {
+    if (!isOperatorPressed){
     if (!isDigitPressed){
         self.firstNumber.text = [NSString string];
         
@@ -51,12 +53,44 @@
     else {
     self.firstNumber.text = [self.firstNumber.text stringByAppendingString:sender.titleLabel.text];
     }
+    }
+    else{
+        if (!isDigitPressed){
+            self.secondNumber.text = [NSString string];
+            
+            self.secondNumber.text = [self.secondNumber.text stringByAppendingString:sender.titleLabel.text];
+            isDigitPressed = YES;
+        }
+        
+        else {
+            self.secondNumber.text = [self.secondNumber.text stringByAppendingString:sender.titleLabel.text];
+        }
+    }
 }
 
 //updates the operator level
 - (IBAction)operatorPressed:(UIButton *)sender
 {
+    if ([sender.titleLabel.text isEqualToString:(@"C")]){
+        [self clear];
+        
+    }
     
+    else if (![sender.titleLabel.text isEqualToString:@"="]){
+
+    self.operator.text = sender.titleLabel.text;
+    }
+    isOperatorPressed = YES;
+    isDigitPressed = NO;
+    
+}
+
+- (void)clear
+{
+    self.firstNumber.text = @"0";
+    self.secondNumber.text = @"0";
+    self.result.text = @"0";
+    self.operator.text = [NSString string];
     
 }
 
@@ -64,7 +98,7 @@
 {
     [super viewDidLoad];
     isDigitPressed = NO;
-    
+    isOperatorPressed = NO;
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
